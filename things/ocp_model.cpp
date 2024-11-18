@@ -111,3 +111,4 @@ int main() {
     document.push_back(Vector3D{1, 2, 3});
     draw(document, std::cout, 0);
 }
+

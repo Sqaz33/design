@@ -223,5 +223,84 @@ class Screen : IFigure {
 // нарушение OPC.
 // при расширении класса, не меняется код класса (например наследование).
 
+//                  |
+//                  |
+//                  |
+//                  |
+//                  ↓
+
 
 // решение с соблюдение OPC и SRP смотри в things/ocp_model.cpp
+
+
+
+//-------------------------------------------
+// LSP - is a
+
+// нарушиние LSP 
+bool instersect(Polygon2D& l, Polygon2D& r); // 2D intersection 
+
+class Polygon2D {
+    std::vector<double> xcoord, ycoord;
+    ....
+};
+
+class Polygon3D : public Polygon2D { // Polygon3D is a Polygon2D
+    std::vector<double> zcoord;
+    ....
+}; // 3D полигон можно использовать во всех контекстах, где можно использовать и 2D.
+// здесь по факту - это некоректно -> нарушение LSP.
+
+
+
+//-------------------------------------------
+// ISP 
+
+// нарушение ISP
+struct IWorker {
+    virtual void work() = 0;
+    virtual void eat() = 0;
+};
+
+class Robot : public IWorker {
+    void work() override { ... }
+    void eat() override { 
+        // do nothing or abort
+
+        // такая реализация интерфейса сигнализирует о нарушении ISP. 
+    }
+};
+
+class Manager {
+    IWorker* subdue;
+
+public:
+    void manage() {
+        subdue->work();
+    }
+}; 
+// Менеджер зависит от интерфейса eat, но не использует его.
+// В итоге робот должен определить eat.
+
+//                  |
+//                  |
+//                  |
+//                  |
+//                  ↓
+
+// решение проблемы 
+struct IWorkable {
+    virtual void work() = 0;
+};
+
+class Robot : public IWorkable {
+    void work() override;
+};
+// Лучше писать небольшие self-contained интерфейсы. 
+
+
+//-------------------------------------------
+// DIP
+
+// Низкоуровневые и высокоуровневые классы должны зависить от абстракций. 
+// если нужна зависимость - то она должна быть между абстрактными классами.
