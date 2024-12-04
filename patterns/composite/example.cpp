@@ -1,3 +1,8 @@
+/**
+ * @file example.cpp
+ * @brief пример паттерна компоновщик.  
+ */
+
 #include <algorithm>
 #include <iterator>
 #include <memory>
