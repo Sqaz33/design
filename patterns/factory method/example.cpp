@@ -1,27 +1,5 @@
 /**
  * @file example.cpp
- * @brief пример паттерна абстрактная фабрика.
- */
-
-#include <iostream>
-#include <memory>
-#include <string>
-
-class AbstractProductA {
-public:
-    ~AbstractProductA() { }
-    virtual int getVal() = 0;
-};
-
-class ConcreteProductA1 : public AbstractProductA {
-public:
-    int getVal() override {
-        return 1;
-    }
-};
-
-class ConcreteProductA2 : public AbstractProductA {/**
- * @file example.cpp
  * @brief пример паттерна абстрактная фабричный метод.
  */
 
@@ -53,7 +31,7 @@ public:
 class ConcreteProductD : public Product  {
 public:
     void productInterface() override {
-        std::cout << "cout from B\n"; 
+        std::cout << "cout from D\n"; 
     }
 };
 
@@ -99,7 +77,7 @@ int main() {
     product->productInterface();   
 
 #ifdef CONCRETE_CREATOR
-    std::unique_ptr<Creator> creator = std::make_unique<Creator>();
+    creator = std::make_unique<Creator>();
     product = creator->createProduct(); // default product
     product->productInterface();   
 #endif
