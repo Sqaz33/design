@@ -57,9 +57,10 @@ public:
 
 };
 
-class ConcreteCommand : public Command, 
-                        std::enable_shared_from_this<ConcreteCommand>
-{
+class ConcreteCommand final : public Command {
+    ConcreteCommand(ConcreteCommand& com) : 
+        Command(com.receiver()) 
+    {}
 
 public:
     ConcreteCommand(std::shared_ptr<Receiver> receiver) :
